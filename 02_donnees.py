@@ -298,7 +298,7 @@ def __(mo):
 def __():
     import pandas as pd
     import seekwellpandas
-    penguins = pd.read_csv("data/penguins.csv", na_values='NA')
+    penguins = pd.read_csv("https://raw.githubusercontent.com/essicolo/2024_formation-dhh/refs/heads/main/data/penguins.csv", na_values='NA')
     penguins
     return pd, penguins, seekwellpandas
 
@@ -488,7 +488,7 @@ def __(mo):
 
 @app.cell
 def __(pd):
-    penguins_meta = pd.read_csv('data/penguins_meta.csv')
+    penguins_meta = pd.read_csv('https://raw.githubusercontent.com/essicolo/2024_formation-dhh/refs/heads/main/data/penguins_meta.csv')
     penguins_meta
     return (penguins_meta,)
 
