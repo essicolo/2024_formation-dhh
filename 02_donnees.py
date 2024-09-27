@@ -214,7 +214,7 @@ def __(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def __(mo):
     mo.md(
         r"""
@@ -303,11 +303,13 @@ def __():
     return pd, penguins, seekwellpandas
 
 
-@app.cell
+@app.cell(hide_code=True)
 def __(mo):
     mo.md(
         r"""
         Conformément aux règles de construction d'un tableau, *Pandas* demande à ce que chaque colonne possède un entête unique, et qu'une colonne ne contienne qu'un type de données.
+
+        N'oubliez pas d'importer `seekwellpandas`. Il s'agit d'un package que j'ai développé pour faciliter les requêtes sur des tableaux `pandas`.
 
         ### Sélectionner et filtrer des données
 
@@ -323,13 +325,45 @@ def __(mo):
 
 @app.cell
 def __(penguins):
-    penguins[["bill_depth_mm", "bill_length_mm"]]
+    penguins.select("bill_depth_mm", "bill_length_mm")
     return
 
 
 @app.cell
 def __(mo):
-    mo.md(r"""Une sélection négative, par exclusion, peut être effectuée avec la méthode `.drop()`.""")
+    mo.md(r"""Une sélection négative, par exclusion, peut également être effectuée.""")
+    return
+
+
+@app.cell
+def __(penguins):
+    penguins.select('-bill_depth_mm', '-bill_length_mm', '-body_mass_g', '-year', '-rowid')
+    return
+
+
+@app.cell(hide_code=True)
+def __(mo):
+    mo.md(
+        r"""
+        > Les API de [`pandas`](https://pandas.pydata.org/) et [`seekwellpandas`](essicolo.github.io/seekwellpandas) sont 100% compatibles!
+
+        #### Filtrer
+
+        La méthode `.where_()` de *seekwellpandas* est un relai vers la méthode `.query()` de *Pandas*, et simplifie les opérations de filtrage des données. Notez que j'utilise les double guillements `"..."` à l'extérieur pour être en mesure de nommer les colonnes grâce à des guillemets simples `'...'`.
+        """
+    )
+    return
+
+
+@app.cell
+def __(penguins):
+    penguins.where_("sex == 'female' and island == 'Torgersen'")
+    return
+
+
+@app.cell(hide_code=True)
+def __(mo):
+    mo.md(r"""Les opérations de *Pandas* peuvent également être effectués en chaîne, en les englobant entre parenthèses.""")
     return
 
 
@@ -337,13 +371,146 @@ def __(mo):
 def __(penguins):
     (
         penguins
-        .pop(['bill_depth_mm', 'bill_length_mm'])
+        .where_("sex == 'female' and island == 'Torgersen'")
+        .select('year', 'bill_length_mm')
+        .where_("year >= 2008")
+    )
+    return
+
+
+@app.cell(hide_code=True)
+def __(mo):
+    mo.md(
+        r"""
+        ### Effectuer un sommaire avec `group_by`
+
+        La méthode `.group_by()` permet d'effectuer des calculs par groupe et sous-groupes. À la suite d'un regroupement, on calcule habituellement une agrégation.
+        """
     )
     return
 
 
 @app.cell
-def __():
+def __(penguins):
+    (
+        penguins
+        .where_("island == 'Dream'")
+        .group_by(['species', 'sex'])
+        .agg({'body_mass_g': 'mean'})
+    )
+    return
+
+
+@app.cell
+def __(mo):
+    mo.md(
+        r"""
+        ### Effectuer des calculs avec `with_column`
+
+        `with_column` est super pratique pour effectuer des opérations sur des colonnes.
+        """
+    )
+    return
+
+
+@app.cell
+def __(penguins):
+    (
+        penguins
+        .with_column('body_mass_g', "body_mass_g / 1000")
+        .rename_column('body_mass_g', 'body_mass_kg')
+    )
+    return
+
+
+@app.cell
+def __(mo):
+    mo.md(
+        r"""
+        ### Tableau large - tableau long
+
+        Le tableau `penguins` est formaté correctement selon les règles établies précédemment. Ce n'est pas toujours le cas. Par exemple celui-ci.
+        """
+    )
+    return
+
+
+@app.cell
+def __(np, pd):
+    experience = pd.DataFrame({
+        'Site': ['Sainte-Patente', 'Sainte-Affaire', 'Saint-Gréement'],
+        'Traitement A': [4.1, 5.8, 2.9], 'Traitement B': [8.2, 5.9, 3.4],
+        'Traitement C': [6.8, np.nan, 4.6]
+    })
+    experience
+    return (experience,)
+
+
+@app.cell(hide_code=True)
+def __(mo):
+    mo.md(r"""Pour transformer ce tableau en mode *tidy* (organisé), utilisons la méthode `.unpivot()` (qui est un pont vers la méthode équivalente, `.melt()`). Cette méthode prend, comme argument `id_var`, les colonnes qui ne doivent *pas* être fusionnées. Dans ce cas-ci, les sites.""")
+    return
+
+
+@app.cell
+def __(experience):
+    experience.unpivot(id_vars='Site')
+    return
+
+
+@app.cell(hide_code=True)
+def __(mo):
+    mo.md(r"""L'opération inverse est `.pivot()`.""")
+    return
+
+
+@app.cell
+def __(experience):
+    (
+        experience
+        .unpivot(id_vars='Site')
+        .pivot(index='Site', columns='variable', values='value')
+    )
+    return
+
+
+@app.cell(hide_code=True)
+def __(mo):
+    mo.md(
+        r"""
+        ### Combiner des tableaux
+
+        Nous avons introduit plus haut la notion de base de données. Nous voudrions peut-être utiliser le nom de l'espèce de manchot pour lui attribuer certaines caractéristiques.
+        """
+    )
+    return
+
+
+@app.cell
+def __(pd):
+    penguins_meta = pd.read_csv('data/penguins_meta.csv')
+    penguins_meta
+    return (penguins_meta,)
+
+
+@app.cell(hide_code=True)
+def __(mo):
+    mo.md(r"""Notre information est organisée en deux tableaux, liés par la colonne `species`. Comment fusionner l'information pour que l'info soit être utilisée dans son ensemble ? Par des opérations de jointure. La plus commune est la jointure à gauche, où le tableau de droit vient se coller au tableau de gauche.""")
+    return
+
+
+@app.cell
+def __(penguins, penguins_meta):
+    (
+        penguins # tableau de gauche
+        .join_(penguins_meta, on='species', how='left')
+    )
+    return
+
+
+@app.cell(hide_code=True)
+def __(mo):
+    mo.md(r"""Ainsi, les informations sont combinées. Plusieurs [types de jointure](https://en.wikipedia.org/wiki/Join_(SQL)) peuvent être effectuées.""")
     return
 
 

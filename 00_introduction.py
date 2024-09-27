@@ -28,18 +28,13 @@ def __(mo):
 
 @app.cell
 def __():
-    return
-
-
-@app.cell
-def __():
     _a = 2
     _b = 4
     _a + _b
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def __(mo):
     mo.md(r"""En Python, on peut créer des listes de nombres, de caractères, de n'importe quoi, en utilisant des crochets.""")
     return
