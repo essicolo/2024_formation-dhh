@@ -10,17 +10,12 @@ def __():
     return (mo,)
 
 
-@app.cell
-def __():
-    return
-
-
-@app.cell
+@app.cell(hide_code=True)
 def __(mo):
     mo.md(
         r"""
-         # Python
-     
+        # Python
+
         Le python est une famille de reptile avec pas de pattes comprenant 10 espèces. Mais [Python](https://www.python.org/about/) est un langage de programmation lancé en 1991 par Guido van Rossum, un fan du groupe d'humoristes britanniques Mounty Python.
 
         Python est un langage dynamique, c'est-à-dire que le code peut être exécuté ligne par ligne ou bloc par bloc: un avantage majeur pour des activités qui nécessitent des interactions fréquentes. Python s'impose non seulement pour créer des applications, mais aussi comme outil de calcul scientifique.
@@ -37,7 +32,7 @@ def __():
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def __(mo):
     mo.md(r"""☑️ Test d'Orwell, check!""")
     return
@@ -67,12 +62,7 @@ def __():
     return
 
 
-@app.cell
-def __():
-    return
-
-
-@app.cell
+@app.cell(hide_code=True)
 def __(mo):
     mo.md(
         r"""
@@ -90,7 +80,7 @@ def __():
     return (a,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def __(mo):
     mo.md(r"""Techniquement, `a` pointe vers le nombre entier `3`. Conséquemment, on peut effectuer des opérations sur `a`.""")
     return
@@ -104,17 +94,17 @@ def __(a):
 
 @app.cell(hide_code=True)
 def __(mo):
-    mo.md(r"""Dans le cas particulier de l'interface Marimo, on ne peut réassigner une variable.""")
+    mo.md(r"""Dans le cas particulier de l'interface Marimo, on ne peut réassigner une variable. J'ai mis le code en commentaire pour éviter d'affecter tout le carnet, mais voyez ce qui arrive si l'on enlève le `#`.""")
     return
 
 
 @app.cell
 def __():
-    a = 4
-    return (a,)
+    # a = 4
+    return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def __(mo):
     mo.md(
         r"""
@@ -336,7 +326,6 @@ def __(mo):
         ## Les fonctions
 
         Plus haut, j'ai présenté la fonction `len` et  la méthode `append`. Une myriade de fonctions est livrée par défaut avec Python. Mais il en manque aussi cruellement.
-
         """
     )
     return
@@ -348,21 +337,9 @@ def __(sqrt):
     return
 
 
-@app.cell(hide_code=True)
+@app.cell
 def __(mo):
-    mo.md(
-        r"""
-        Message d'erreur: la commande `sqrt` n'est pas définie. 
-
-        > Quoi, Python n'est pas foutu de calculer une racine carrée?
-
-        Par défaut, non. 🤷
-
-        Mais!
-
-        De nombreuses extensions (les *modules*) permettent de combler ces manques. Nous aborderons ça un peu plus loin dans ce chapitre. Pour l'instant, exerçons-nous à créer notre propre fonction de racine carrée.
-        """
-    )
+    mo.md(r"""Message d'erreur: la commande `sqrt` n'est pas définie. De nombreuses extensions (les *modules*) permettent de combler ces manques. Nous aborderons ça un peu plus loin dans ce chapitre. Pour l'instant, exerçons-nous à créer notre propre fonction de racine carrée.""")
     return
 
 
@@ -402,10 +379,15 @@ def __(mo):
 
 
 @app.cell
-def __(racine):
+def __():
     data = [3.5, 8.1, 10.2, 0.5, 5.6]
-    racine(x=data, n=2)
     return (data,)
+
+
+@app.cell
+def __(data, racine):
+    racine(x=data, n=2)
+    return
 
 
 @app.cell(hide_code=True)
@@ -507,6 +489,12 @@ def __(mo):
 
 
 @app.cell
+def __(test):
+    test 
+    return
+
+
+@app.cell
 def __(racine):
     racine(x=-1, n=2)
     return
@@ -575,7 +563,7 @@ def __(mo):
 
         Le module *Numpy* est une boîte d'outil de calcul numérique incluant par de nombreuses foncions mathématiques. Un message d'erreur apparaîtra s'il n'est pas installé. Pour l'installer, vous pouvez passer par le symbole de cube (*Manage packages*) dans la barre verticale de *Marimo*.
 
-        <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 256 256"><path fill="currentColor" d="m223.68 66.15l-88-48.15a15.88 15.88 0 0 0-15.36 0l-88 48.17a16 16 0 0 0-8.32 14v95.64a16 16 0 0 0 8.32 14l88 48.17a15.88 15.88 0 0 0 15.36 0l88-48.17a16 16 0 0 0 8.32-14V80.18a16 16 0 0 0-8.32-14.03M128 32l80.34 44L128 120L47.66 76ZM40 90l80 43.78v85.79l-80-43.75Zm96 129.57v-85.75L216 90v85.78Z"/></svg> 
+        <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 256 256"><path fill="currentColor" d="m223.68 66.15l-88-48.15a15.88 15.88 0 0 0-15.36 0l-88 48.17a16 16 0 0 0-8.32 14v95.64a16 16 0 0 0 8.32 14l88 48.17a15.88 15.88 0 0 0 15.36 0l88-48.17a16 16 0 0 0 8.32-14V80.18a16 16 0 0 0-8.32-14.03M128 32l80.34 44L128 120L47.66 76ZM40 90l80 43.78v85.79l-80-43.75Zm96 129.57v-85.75L216 90v85.78Z"/></svg>
         """
     )
     return

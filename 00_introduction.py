@@ -28,6 +28,11 @@ def __(mo):
 
 @app.cell
 def __():
+    return
+
+
+@app.cell
+def __():
     _a = 2
     _b = 4
     _a + _b
@@ -49,7 +54,13 @@ def __():
 
 @app.cell(hide_code=True)
 def __(mo):
-    mo.md(r"""Les messages d'erreur sont inévitables, même pour les pros. Ce qui fait la différence entre novices et experts, c'est que les experts savent rapidement comment régler un problème, et ça inclut la capacité à comprendre les messages d'erreur et à corriger la situation. Disons que vous voulez ajouter 1 à chaque élément de la liste.""")
+    mo.md(
+        r"""
+        ## Les messages d'erreur
+
+        Les messages d'erreur sont inévitables, même pour les pros. Ce qui fait la différence entre novices et experts, c'est que les experts savent rapidement comment régler un problème, et ça inclut la capacité à comprendre les messages d'erreur et à corriger la situation. Disons que vous voulez ajouter 1 à chaque élément de la liste.
+        """
+    )
     return
 
 
@@ -59,9 +70,15 @@ def __(a):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def __(mo):
-    mo.md(r"""La variable `a` étant une liste, Python s'attend à ce qu'on ajoute une liste à une liste.""")
+    mo.md(
+        r"""
+        > Truc de pro, ayez toujours tout proche un onglet avec un moteur de recherche ou un assistant IA pour y rechercher vos messages d'erreur.
+
+        La variable `a` étant une liste, Python s'attend à ce qu'on ajoute une liste à une liste.
+        """
+    )
     return
 
 
@@ -73,7 +90,15 @@ def __(a):
 
 @app.cell(hide_code=True)
 def __(mo):
-    mo.md(r"""Le bogue le plus insidieux est celui qui ne génère pas d'erreur, mais effectue la mauvaise opération. Rappelez-vous que Python est un langage de programmation générique: il ne sait pas que vous voulez effectuer une opération mathématique. Pour ajouter de nouvelles capacités à Python, nous devons importer des modules (aussi appelés librairies ou blbliothèques, et packages en anglais). Pour les calculs sur des matrices et les opérations de mathématiques, nous avons besoin du module *Numpy*, que nous importons avec l'alias de notre choix: par convention, nous prenons `np`, puis nous spécifions que a est un vecteur, sur lequel nous effectuerons notre opération sans problème.""")
+    mo.md(
+        r"""
+        Le bogue le plus insidieux est celui effectue la mauvaise opération sans générer d'erreur. Rappelez-vous que Python est un langage de programmation générique: il ne sait pas que vous voulez effectuer une opération mathématique.
+
+        ## L'écosystème Python
+
+        On pourrait effectuer une boucle et ajouter 1 à chaque élément de la liste (les boucles sont expliquées dans le carnet `01_python.py`), mais lorsque vient le temps d'effectuer des opérations mathématiques, nous pouvons jeter un oeil à l'écosystème de Python. En effet, pour ajouter de nouvelles capacités à Python, nous devons importer des modules (aussi appelés librairies ou bibliothèques, et packages en anglais). Pour les calculs sur des matrices et les opérations de mathématiques, nous avons besoin du module *Numpy*, que nous importons avec l'alias de notre choix: par convention, nous prenons `np`, puis nous spécifions que `a` est un vecteur, sur lequel nous effectuerons notre opération sans problème.
+        """
+    )
     return
 
 
@@ -88,15 +113,18 @@ def __(a):
 def __(mo):
     mo.md(
         r"""
-        Il existe de nombreux modules en Python, certains très spécialisés, d'autres plus génériques. Certains viennent par défaut avec la distribution Python que vous utiliserez, d'autres devront être installés. Voici une liste de modules que nous utiliserons.
+        ## À propos de cette formation
 
-        - *Pandas*. Vous trouverez ce module pour gérer des tableaux dans beaucoup de tutoriels. *Polars* est un outil de gestion de tableaux plus moderne que *Pandas*, mais l'extension *GeoPandas* reposant sur *Pandas*, nous utiliserons *Pandas* malgré ses bizarreries.
-        - *Lets-plot*. Il existe de nombreux modules pour générer des graphiques, comme *Matplotlib*, *Plotly*, *Altair*, etc. *Lets-plot* est rapide et polyvalent.
-        - *Scipy*. Une collection d'outils pour le calcul scientifique, complémentaire à *Numpy*. Nous ne l'utiliserons pas tellement de manière directe, mais vous le verrez dans bien des tutoriels. *Scipy* contient entre autres des fonctions d'optimisation bien plus performantes que le Solveur de Excel.
-        - *Statsmodels*. Pour tout ce qui est statistiques fréquentielles (avec p-values). Je préfère les statistiques bayésiennes avec *PyMC*, mais c'est plus compliqué.
-        - *Scikit-Learn*. Un trousse d'outils pour l'apprentissage machine que nous utiliserons. Elle est regardée de haut par les experts, mais reste utile pour créer des modèles professionnels. Néanmoins, les experts utilisent davantage les modules *Keras*, *Tensorflow* et *Pytorch*.
+        Cette formation vise à introduire Python et son écosystème aux professionnels œuvrant dans les domaines de l'hydrologie et de la géomatique. Elle couvre quelques aspects généraux, et vous guidera vers des utilisations plus spécialisées.
 
-        L'introduction ne fait qu'effleurer la programmation. Truc de pro, ayez toujours tout proche un onglet avec un moteur de recherche ou un assistant IA pour y rechercher vos messages d'erreur.
+        1. Bases en programmation Python
+        2. Manipulation des matrices et des tableaux (numpy, xarray et pandas)
+        3. Visualisations (matplotlib et altair)
+        4. Opérations spatiales (geopandas et rioxarray)
+        5. Bases de données (sqlalchemy)
+        6. Requêtes par API (cdsapi, planetary_computer)
+        7. Modélisation intuitive (scikit-learn)
+        8. Hydrologie (pysheds, darts)
         """
     )
     return
