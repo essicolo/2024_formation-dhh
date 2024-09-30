@@ -134,12 +134,34 @@ def __(mo):
 
 @app.cell
 def __(alt):
-    source = alt.topo_feature('https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/world-110m.json', 'countries')
-    alt.Chart(source, width=500, height=300).mark_geoshape(
-        fill='lightgray',
-        stroke='gray'
+    # set MARIMO_OUTPUT_MAX_BYTES=15_000_000
+    url_geojson = 'https://www.donneesquebec.ca/recherche/dataset/b4893e20-3a65-44fe-a428-68c79e303fb4/resource/fcdd3e3b-b6dc-45ae-9e88-542b842b1774/download/vdq-hydrobassinversant.geojson'
+    data_geojson_remote = alt.Data(url=url_geojson, format=alt.DataFormat(property='features',type='json'))
+
+    (
+        alt.Chart(data_geojson_remote, width=500, height=300)
+        .mark_geoshape()
+        .encode(color='properties.NOM:N')
+        .project(type='identity')
+        .interactive()
     )
-    return (source,)
+    return data_geojson_remote, url_geojson
+
+
+@app.cell
+def __():
+    return
+
+
+@app.cell
+def __():
+    return
+
+
+@app.cell
+def __(data_geojson_remote):
+    data_geojson_remote
+    return
 
 
 @app.cell

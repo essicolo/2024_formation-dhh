@@ -113,20 +113,16 @@ def __(mo):
         Cette formation vise à introduire Python et son écosystème aux professionnels œuvrant dans les domaines de l'hydrologie et de la géomatique. Elle couvre quelques aspects généraux, et vous guidera vers des utilisations plus spécialisées.
 
         1. Bases en programmation Python
-        2. Manipulation des matrices et des tableaux (numpy, xarray et pandas)
+        2. Manipulation des matrices et des tableaux (numpy et pandas)
         3. Visualisations (matplotlib et altair)
-        4. Opérations spatiales (geopandas et rioxarray)
-        5. Bases de données (sqlalchemy)
-        6. Requêtes par API (cdsapi, planetary_computer)
-        7. Modélisation intuitive (scikit-learn)
-        8. Hydrologie (pysheds, darts)
+        4. Installer Python localement
+        5. Opérations spatiales (geopandas et xarray)
+        6. Bases de données (sqlalchemy)
+        7. Requêtes par API (cdsapi, planetary_computer)
+        8. Modélisation intuitive (scikit-learn)
+        9. Hydrologie (pysheds, darts)
         """
     )
-    return
-
-
-@app.cell
-def __():
     return
 
 

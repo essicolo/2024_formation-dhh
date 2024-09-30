@@ -514,5 +514,75 @@ def __(mo):
     return
 
 
+@app.cell(hide_code=True)
+def __(mo):
+    mo.md(
+        r"""
+        ## Les données vectorielles spatiales avec *Geopandas*
+
+        Geopandas permet d'ajouter des colonnes dont chaque élément est une géométrie de type, point, multi-point, ligne, polygone, etc. Les données peuvent provenir de fichiers *geojson*, des *shape files*, *parquet*, etc. Le tableau suivant contient un polygone par zone de bassin versant.
+        """
+    )
+    return
+
+
+@app.cell
+def __():
+    import geopandas as gpd
+
+    url_geojson = 'https://www.donneesquebec.ca/recherche/dataset/b4893e20-3a65-44fe-a428-68c79e303fb4/resource/fcdd3e3b-b6dc-45ae-9e88-542b842b1774/download/vdq-hydrobassinversant.geojson'
+    hydro_vdq_4326 = gpd.read_file(url_geojson)
+    hydro_vdq_4326.limit(1)
+    return gpd, hydro_vdq_4326, url_geojson
+
+
+@app.cell(hide_code=True)
+def __(mo):
+    mo.md(
+        r"""
+        Les opérations de sélection, de filtre et de jointure restent les mêmes qu'avec *Pandas*. *Geopandas* permet par surcroît des opérations spatiales comme la gestion de systèmes géodésique, le calcul d'aires et de distances ou des combinaisons de polygones.
+
+        Le système géodésique est placé dans l'attribut `.crs`. S'il n'est pas bien identifié dans les données source, ce qui est le cas de nos données, le CRS par défaut est le 4326. Sachant que nos données ont le système géodésique 32187, nous pouvons le changer.
+        """
+    )
+    return
+
+
+@app.cell
+def __(hydro_vdq_4326):
+    hydro_vdq = hydro_vdq_4326.set_crs('EPSG:32187', allow_override=True)
+    return (hydro_vdq,)
+
+
+@app.cell(hide_code=True)
+def __(mo):
+    mo.md(r"""Sachant que le CRS 32187 est une projection, on peut soutirer les aires des polygones.""")
+    return
+
+
+@app.cell
+def __(hydro_vdq):
+    hydro_vdq.area
+    return
+
+
+@app.cell(hide_code=True)
+def __(mo):
+    mo.md(
+        r"""
+        Je ne couvrirai pas tous les types d'opérations spatiales possibles, car je ne ferai que répéter la documentation de *Geopandas*, qui comprend un [tutoriel](https://geopandas.org/en/stable/getting_started/introduction.html) que je vous invite à suivre.
+
+        Avant de passer au prochain chapitre dédié à la visualisation, j'introduis la méthode `.plot()`, pratique autant pour *Pandas* que pour *Geopandas*.
+        """
+    )
+    return
+
+
+@app.cell
+def __(hydro_vdq):
+    hydro_vdq.to_crs(4326).plot(column='NOM')
+    return
+
+
 if __name__ == "__main__":
     app.run()
